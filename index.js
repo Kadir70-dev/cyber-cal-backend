@@ -12,7 +12,12 @@ const app = express();
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(cors({ origin: process.env.FRONTEND_ORIGIN || '*' }));
+app.use(cors({
+  origin: process.env.FRONTEND_ORIGIN || '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
 
 const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/cybercal';
 mongoose.connect(mongoUri, { useNewUrlParser:true, useUnifiedTopology:true })
